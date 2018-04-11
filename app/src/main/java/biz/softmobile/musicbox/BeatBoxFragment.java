@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import biz.softmobile.musicbox.databinding.ListItemSoundBinding;
 
 import biz.softmobile.musicbox.databinding.FragmentBeatBoxBinding;
-
+////////8888888
 public class BeatBoxFragment extends Fragment {
     public static BeatBoxFragment newInstance(){
         return  new BeatBoxFragment();
