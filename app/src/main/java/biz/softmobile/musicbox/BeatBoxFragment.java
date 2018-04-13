@@ -14,8 +14,17 @@ import biz.softmobile.musicbox.databinding.ListItemSoundBinding;
 import biz.softmobile.musicbox.databinding.FragmentBeatBoxBinding;
 ////////8888888
 public class BeatBoxFragment extends Fragment {
+
+    private BeatBox mBeatBox;
+
     public static BeatBoxFragment newInstance(){
         return  new BeatBoxFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        mBeatBox = new BeatBox(getActivity());
     }
 
     @Override
