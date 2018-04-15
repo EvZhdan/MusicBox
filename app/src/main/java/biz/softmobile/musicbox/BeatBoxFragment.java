@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import biz.softmobile.musicbox.databinding.ListItemSoundBinding;
 
 import biz.softmobile.musicbox.databinding.FragmentBeatBoxBinding;
@@ -33,7 +35,7 @@ public class BeatBoxFragment extends Fragment {
 
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
 
-        binding.recyclerView.setAdapter(new SoundAdapter());
+        binding.recyclerView.setAdapter(new SoundAdapter(mBeatBox.getmSound()));
 
         return binding.getRoot();
     }
@@ -44,10 +46,22 @@ public class BeatBoxFragment extends Fragment {
         public SoundHolder(ListItemSoundBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            mBinding.setViewModel(new SoundViewModel(mBeatBox));
+        }
+        public void bind(Sound sound){
+            mBinding.getViewModel().setSound(sound);
+            mBinding.executePendingBindings();
         }
     }
 
     private class SoundAdapter extends RecyclerView.Adapter<SoundHolder>{
+
+        private List<Sound> mSounds;
+
+        public SoundAdapter(List<Sound> sounds) {
+            this.mSounds = sounds;
+        }
+
         @Override
         public SoundHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -58,12 +72,14 @@ public class BeatBoxFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(SoundHolder holder, int position) {
+            Sound sound = mSounds.get(position);
+            holder.bind(sound);
 
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mSounds.size();
         }
     }
 
