@@ -7,6 +7,7 @@ package biz.softmobile.musicbox;
 public class Sound {
     private String mAssetPath;
     private String mName;
+    private Integer mSoundId;
 
     public Sound(String assetPath) {
         this.mAssetPath = assetPath;
@@ -20,5 +21,13 @@ public class Sound {
 
     public String getmName(){
         return mName;
+    }
+
+    public Integer getSoundId(){
+        return mSoundId;
+    }
+
+    public void setmSoundId(Integer soundId){
+        mSoundId = soundId;
     }
 }

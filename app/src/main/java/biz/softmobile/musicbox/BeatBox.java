@@ -1,6 +1,7 @@
 package biz.softmobile.musicbox;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -32,6 +33,14 @@ public class BeatBox {
         loadSounds();
     }
 
+    public void play(Sound sound){
+        Integer soundId = sound.getSoundId();
+        if(soundId == null){
+            return;
+        }
+        mSoundPool.play(soundId,1.0f,1.0f,1,0,1.0f);
+    }
+
     private void loadSounds(){
         String[] soundNames;
         try {
@@ -43,10 +52,22 @@ public class BeatBox {
         }
 
         for(String filename : soundNames){
-            String assetPath = SOUNDS_FOLDER + "/"+filename;
-            Sound sound = new Sound(assetPath);
-            mSound.add(sound);
+            try {
+                String assetPath = SOUNDS_FOLDER + "/"+filename;
+                Sound sound = new Sound(assetPath);
+                load(sound);
+                mSound.add(sound);
+            }catch (IOException ioe){
+                Log.e(TAG,"Could not load sound " + filename,ioe);
+            }
+
         }
+    }
+
+    private void load(Sound sound) throws IOException{
+        AssetFileDescriptor afd = mAsset.openFd(sound.getmAssetPath());
+        int soundId = mSoundPool.load(afd,1);
+        sound.setmSoundId(soundId);
     }
 
     public List<Sound> getmSound(){
